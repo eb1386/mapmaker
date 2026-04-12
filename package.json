@@ -16,7 +16,8 @@
     "db:seed": "npx supabase db reset",
     "db:types": "npx supabase gen types typescript --local > src/types/database.generated.ts",
     "db:link": "npx supabase link --project-ref eydxpgmergsqpsmrzgdf",
-    "db:push": "npx supabase db push"
+    "db:push": "npx supabase db push",
+    "db:push:remote": "node scripts/push-remote-schema.mjs"
   },
   "devDependencies": {
     "typescript": "~6.0.2",
