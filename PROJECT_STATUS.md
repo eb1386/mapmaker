@@ -22,15 +22,25 @@
 | Seed data created | Done | `supabase/seed.sql` |
 | RLS enabled + public read policy | Done | In migration |
 | Remote .env configured | Done | Points to eydxpgmergsqpsmrzgdf project |
-| Remote Supabase link | Pending | Need to run `npx supabase link` |
-| Remote migration push | Pending | Need to run `npx supabase db push` |
-| Remote seed | Pending | After migration push |
+| Remote Supabase link | Blocked | Requires `SUPABASE_ACCESS_TOKEN` - run `npx supabase login` then `npm run db:link` |
+| Remote migration push | Blocked | After link - run `npm run db:push` |
+| Remote seed | Blocked | After push - run seed SQL via dashboard SQL editor |
 
 ## Phase 3 - Harden & Ship
 
 | Step | Status | Notes |
 |------|--------|-------|
-| GitHub repo created | Pending | |
-| Code pushed | Pending | |
-| README finalized | Pending | |
-| HANDOFF finalized | Pending | |
+| GitHub repo created | Done | https://github.com/eb1386/selfcare-map (public) |
+| Code pushed | Done | master branch |
+| README finalized | Done | Full setup + Supabase docs |
+| HANDOFF finalized | Done | Bootstrap + remote commands |
+| ARCHITECTURE_NOTES finalized | Done | Source analysis + new arch |
+| LICENSE added | Done | MIT |
+| Boilerplate cleaned | Done | Removed unused Vite scaffold files |
+
+## Blockers
+
+- **Supabase CLI auth**: Non-TTY environment cannot run interactive `npx supabase login`. Need to set `SUPABASE_ACCESS_TOKEN` env var or run in a terminal. Once authenticated, run:
+  1. `npx supabase link --project-ref eydxpgmergsqpsmrzgdf`
+  2. `npx supabase db push`
+  3. Run `supabase/seed.sql` via Supabase dashboard SQL editor
