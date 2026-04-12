@@ -22,9 +22,9 @@
 | Seed data created | Done | `supabase/seed.sql` |
 | RLS enabled + public read policy | Done | In migration |
 | Remote .env configured | Done | Points to eydxpgmergsqpsmrzgdf project |
-| Remote Supabase link | Blocked | Requires `SUPABASE_ACCESS_TOKEN` - run `npx supabase login` then `npm run db:link` |
-| Remote migration push | Blocked | After link - run `npm run db:push` |
-| Remote seed | Blocked | After push - run seed SQL via dashboard SQL editor |
+| Remote migration applied | Done | `locations` table exists with RLS + public read policy |
+| Remote seed data | Done | 4 locations inserted via REST API with service_role key |
+| Remote data verified | Done | Anon key query returns all 4 locations ordered by sort_order |
 
 ## Phase 3 - Harden & Ship
 
@@ -38,9 +38,16 @@
 | LICENSE added | Done | MIT |
 | Boilerplate cleaned | Done | Removed unused Vite scaffold files |
 
-## Blockers
+## Remote Database Status
 
-- **Supabase CLI auth**: Non-TTY environment cannot run interactive `npx supabase login`. Need to set `SUPABASE_ACCESS_TOKEN` env var or run in a terminal. Once authenticated, run:
-  1. `npx supabase link --project-ref eydxpgmergsqpsmrzgdf`
-  2. `npx supabase db push`
-  3. Run `supabase/seed.sql` via Supabase dashboard SQL editor
+- Migration: applied (table `locations` with RLS)
+- Seed: 4 locations inserted (stanley-park, lucky-fortune, kerrisdale, pacific-spirit-park)
+- Verified: anon key REST query returns all data correctly
+- RLS: public read policy active, write blocked from client
+
+## Optional: Supabase CLI Link
+
+For future migration management via CLI:
+1. `npx supabase login` (requires personal access token from https://supabase.com/dashboard/account/tokens)
+2. `npx supabase link --project-ref eydxpgmergsqpsmrzgdf`
+3. `npx supabase db push` (for future migrations)

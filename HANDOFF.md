@@ -54,11 +54,17 @@ npx supabase gen types typescript --local > src/types/database.generated.ts
 npx supabase stop            # when done
 ```
 
-## Remaining Manual Steps
+## Remote Database Status
 
-1. **Supabase CLI auth**: Run `npx supabase login` with a valid access token to link and push migrations to the remote project
-2. **Seed remote DB**: After pushing migrations, run the seed SQL via Supabase dashboard SQL editor or `npx supabase db reset --linked`
-3. **Verify remote**: After seeding, open the app with remote `.env` values and confirm locations load from Supabase
+The remote Supabase database is fully set up:
+- Migration applied: `locations` table with RLS + public read policy
+- Seed data: 4 locations inserted and verified
+- The app is ready to use with the remote `.env` values already configured
+
+## Optional Future Steps
+
+1. **Supabase CLI link** (for future migrations): `npx supabase login` then `npx supabase link --project-ref eydxpgmergsqpsmrzgdf`
+2. **Deploy to hosting**: Run `npm run build` and deploy `dist/` to Vercel, Netlify, or any static host
 
 ## Tech Stack
 
