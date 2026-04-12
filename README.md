@@ -1,76 +1,71 @@
-# Self Care Map
+# selfcaremap
 
-Interactive self-care map of Vancouver powered by Supabase and MapLibre GL. Displays curated locations on an elegant map with photo galleries, audio, and descriptive text.
+Create beautiful interactive maps of places you love. Sign up, pick a custom URL, drop pins on any city, add photos, audio, and descriptions.
 
-## Prerequisites
+## Features
 
-- Node.js 18+
-- npm
-- [Supabase CLI](https://supabase.com/docs/guides/cli) (installed via `npx supabase`)
-- Docker (for local Supabase development)
+- **User accounts** - sign up with email/password, get a personal dashboard
+- **Custom URLs** - every map gets a unique URL like `yoursite.com/my-map`
+- **Any city** - search for any city or navigate the map to find your spot
+- **Add pins** - click to place pins, drag to reposition
+- **Photo galleries** - upload multiple photos per pin with crossfade transitions
+- **Audio** - upload MP3s that auto-play when a pin is selected
+- **Color themes** - 8 preset color schemes or pick custom colors
+- **Text editing** - name, description, and citation for every pin
+- **Public maps** - anyone with the URL can view your map
+- **Mobile responsive** - works on desktop and mobile with adapted layouts
 
 ## Quick Start
 
 ```bash
-# install dependencies
 npm install
-
-# copy env and configure
 cp .env.example .env
-# edit .env with your Supabase URL and anon key
-
-# start dev server
+# edit .env with your Supabase credentials
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`.
+The app runs at `http://localhost:5173`.
 
 ## Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `VITE_SUPABASE_URL` | Supabase project URL (local: `http://127.0.0.1:54321`) |
+| `VITE_SUPABASE_URL` | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase anonymous/public key |
 
-## Supabase Local Development
+## Database
+
+The app uses Supabase (PostgreSQL) with these tables:
+
+| Table | Purpose |
+|-------|---------|
+| `profiles` | User profiles linked to auth (username, display name) |
+| `maps` | User maps with slug, title, position, color scheme |
+| `map_locations` | Pins on each map (coords, photos, audio, text) |
+
+Storage buckets: `photos` and `audio` (both public).
+
+Row Level Security: public read for maps/locations, owner-only write.
+
+## Supabase Setup
+
+### Local Development (requires Docker)
 
 ```bash
-# start local supabase (requires Docker)
-npm run db:start
-
-# apply migrations and seed data
-npm run db:reset
-
-# generate TypeScript types from local schema
-npm run db:types
-
-# stop local supabase
-npm run db:stop
+npm run db:start     # start local supabase
+npm run db:reset     # apply migrations + seed
+npm run db:stop      # stop when done
 ```
 
-After starting local Supabase, update `.env`:
-```
-VITE_SUPABASE_URL=http://127.0.0.1:54321
-VITE_SUPABASE_ANON_KEY=<anon key from supabase start output>
-```
-
-## Supabase Remote Setup
+### Remote
 
 ```bash
-# login to Supabase CLI
 npx supabase login
-
-# link to remote project
-npm run db:link
-
-# push migrations to remote
-npm run db:push
-
-# seed remote database (run seed.sql manually via Supabase dashboard SQL editor
-# or use: npx supabase db reset --linked)
+npm run db:link      # link to remote project
+npm run db:push      # push migrations
 ```
 
-## Available Scripts
+## Scripts
 
 | Script | Description |
 |--------|-------------|
@@ -80,34 +75,26 @@ npm run db:push
 | `npm run typecheck` | TypeScript type checking |
 | `npm run db:start` | Start local Supabase |
 | `npm run db:stop` | Stop local Supabase |
-| `npm run db:reset` | Reset local DB (apply migrations + seed) |
-| `npm run db:migrate` | Apply pending migrations locally |
-| `npm run db:types` | Generate TypeScript types from local DB |
+| `npm run db:reset` | Reset local DB (migrations + seed) |
 | `npm run db:link` | Link to remote Supabase project |
-| `npm run db:push` | Push migrations to remote Supabase |
+| `npm run db:push` | Push migrations to remote |
 
-## Database Schema
+## Tech Stack
 
-### `locations` table
+- Vite + TypeScript (vanilla, no framework)
+- MapLibre GL JS
+- Supabase (PostgreSQL, Auth, Storage)
+- Nominatim (city search geocoding)
+- CARTO Voyager basemap tiles
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | text (PK) | Unique location identifier |
-| `name` | text | Display name |
-| `coords` | float8[] | [longitude, latitude] |
-| `photos` | text[] | Photo paths relative to public/ |
-| `fits` | text[] | CSS object-fit per photo |
-| `audio` | text | Audio file path |
-| `citation` | text | Source citation |
-| `body` | text | Description text |
-| `sort_order` | integer | Display order |
-| `created_at` | timestamptz | Creation timestamp |
+## Deploy
 
-Row Level Security is enabled with a public read policy.
+Build and deploy `dist/` to any static host. The `public/_redirects` file handles SPA routing on Netlify.
 
-## Architecture
-
-See [ARCHITECTURE_NOTES.md](ARCHITECTURE_NOTES.md) for detailed architecture documentation.
+```bash
+npm run build
+# deploy dist/ folder
+```
 
 ## License
 
