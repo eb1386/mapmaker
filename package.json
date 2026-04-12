@@ -1,0 +1,29 @@
+{
+  "name": "selfcare-map",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Interactive self-care map of Vancouver powered by Supabase and MapLibre GL",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "db:start": "npx supabase start",
+    "db:stop": "npx supabase stop",
+    "db:reset": "npx supabase db reset",
+    "db:migrate": "npx supabase migration up --local",
+    "db:seed": "npx supabase db reset",
+    "db:types": "npx supabase gen types typescript --local > src/types/database.generated.ts",
+    "db:link": "npx supabase link --project-ref eydxpgmergsqpsmrzgdf",
+    "db:push": "npx supabase db push"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.2",
+    "vite": "^8.0.4"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.103.0",
+    "maplibre-gl": "^5.22.0"
+  }
+}

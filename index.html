@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<title>Self Care Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="map"></div>
+<div class="stamp">Julia's Self Care Map <span class="heart">&hearts;</span></div>
+<button class="reset-btn" id="reset" aria-label="Reset view">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+</button>
+
+<aside class="panel" id="panel" aria-hidden="true">
+  <button class="panel-close" id="close" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="panel-photo-wrap">
+    <img class="panel-photo" data-slot="0" alt="" />
+    <img class="panel-photo" data-slot="1" alt="" />
+    <button class="audio-btn" id="audiotoggle" aria-label="Toggle music">
+      <span class="ring"></span>
+      <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+    </button>
+    <button class="gallery-btn prev" id="gprev" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="gallery-btn next" id="gnext" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="gallery-dots" id="gdots"></div>
+  </div>
+  <div class="panel-body">
+    <span class="panel-eyebrow" id="eyebrow">a place worth knowing</span>
+    <h1 class="panel-name" id="name"></h1>
+    <p class="panel-subtitle" id="subtitle"></p>
+    <p class="panel-text" id="text"></p>
+    <div class="panel-foot" id="cite"></div>
+  </div>
+</aside>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
