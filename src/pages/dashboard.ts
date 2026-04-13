@@ -12,7 +12,7 @@ export async function renderDashboard() {
   app.innerHTML = `
     <div class="dash-page">
       <header class="dash-header">
-        <h1 class="dash-logo">selfcare<span>map</span></h1>
+        <h1 class="dash-logo">map<span>maker</span></h1>
         <div class="dash-user">
           <span class="dash-username">@${profile.username}</span>
           <button class="dash-logout" id="logoutBtn">log out</button>

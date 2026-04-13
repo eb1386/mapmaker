@@ -1,6 +1,6 @@
 # mapmaker
 
-Create beautiful interactive maps of places you love. Sign up, pick a custom URL, drop pins on any city, add photos, audio, and descriptions.
+Create and share beautiful interactive maps. Sign up, pick a custom URL, drop pins on any city, add photos, audio, and descriptions.
 
 ## Features
 

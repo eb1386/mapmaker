@@ -32,11 +32,18 @@ function buildEditor(app: HTMLElement, mapData: MapRow, locations: MapLocation[]
   app.innerHTML = `
     <div class="map-page editor-mode">
       <div id="map"></div>
+      <div class="stamp stamp-draggable" id="stampEl" style="left:${mapData.stamp_x}px;top:${mapData.stamp_y}px">
+        <span class="stamp-text" id="stampText">${escHtml(mapData.title)}</span>${mapData.show_heart ? '<span class="heart">&hearts;</span>' : ''}
+      </div>
       <div class="editor-topbar">
         <a href="/dashboard" data-link class="editor-back">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </a>
         <input class="editor-title-input" id="titleInput" value="${escAttr(mapData.title)}" placeholder="Map title" />
+        <label class="editor-heart-toggle" title="Show heart">
+          <input type="checkbox" id="heartToggle" ${mapData.show_heart ? 'checked' : ''} />
+          <span>&hearts;</span>
+        </label>
         <a href="/${mapData.slug}" data-link class="editor-preview-btn">preview</a>
       </div>
 
@@ -431,13 +438,74 @@ function buildEditor(app: HTMLElement, mapData: MapRow, locations: MapLocation[]
 
   // === title save ===
   const titleInput = document.getElementById('titleInput') as HTMLInputElement
+  const stampText = document.getElementById('stampText')!
   titleInput.addEventListener('input', () => {
+    stampText.textContent = titleInput.value.trim() || 'Untitled'
     clearTimeout(saveDebounce)
     saveDebounce = setTimeout(async () => {
       try {
         await updateMap(mapData.id, { title: titleInput.value.trim() || 'Untitled' })
       } catch (err) { console.error('title save:', err) }
     }, 800)
+  })
+
+  // === heart toggle ===
+  const heartToggle = document.getElementById('heartToggle') as HTMLInputElement
+  heartToggle.addEventListener('change', async () => {
+    const show = heartToggle.checked
+    mapData.show_heart = show
+    const stampEl = document.getElementById('stampEl')!
+    const existing = stampEl.querySelector('.heart')
+    if (show && !existing) {
+      const span = document.createElement('span')
+      span.className = 'heart'
+      span.innerHTML = '&hearts;'
+      stampEl.appendChild(span)
+    } else if (!show && existing) {
+      existing.remove()
+    }
+    try {
+      await updateMap(mapData.id, { show_heart: show })
+    } catch (err) { console.error('heart toggle:', err) }
+  })
+
+  // === draggable stamp ===
+  const stampEl = document.getElementById('stampEl')!
+  let stampDragging = false
+  let stampOffX = 0
+  let stampOffY = 0
+
+  stampEl.addEventListener('pointerdown', (e: PointerEvent) => {
+    if ((e.target as HTMLElement).closest('.editor-topbar')) return
+    stampDragging = true
+    stampOffX = e.clientX - stampEl.offsetLeft
+    stampOffY = e.clientY - stampEl.offsetTop
+    stampEl.setPointerCapture(e.pointerId)
+    stampEl.style.cursor = 'grabbing'
+    e.preventDefault()
+  })
+
+  stampEl.addEventListener('pointermove', (e: PointerEvent) => {
+    if (!stampDragging) return
+    const x = Math.max(0, Math.min(window.innerWidth - stampEl.offsetWidth, e.clientX - stampOffX))
+    const y = Math.max(0, Math.min(window.innerHeight - stampEl.offsetHeight, e.clientY - stampOffY))
+    stampEl.style.left = x + 'px'
+    stampEl.style.top = y + 'px'
+  })
+
+  stampEl.addEventListener('pointerup', async (e: PointerEvent) => {
+    if (!stampDragging) return
+    stampDragging = false
+    stampEl.style.cursor = ''
+    stampEl.releasePointerCapture(e.pointerId)
+    const x = parseFloat(stampEl.style.left)
+    const y = parseFloat(stampEl.style.top)
+    mapData.stamp_x = x
+    mapData.stamp_y = y
+    try {
+      await updateMap(mapData.id, { stamp_x: x, stamp_y: y })
+      toast('title moved')
+    } catch (err) { console.error('stamp save:', err) }
   })
 
   // === save map position ===

@@ -30,7 +30,7 @@ function buildMapUI(app: HTMLElement, mapData: MapRow, locations: MapLocation[],
   app.innerHTML = `
     <div class="map-page">
       <div id="map"></div>
-      <div class="stamp">${escHtml(mapData.title)} <span class="heart">&hearts;</span></div>
+      <div class="stamp" style="left:${mapData.stamp_x}px;top:${mapData.stamp_y}px">${escHtml(mapData.title)}${mapData.show_heart ? ' <span class="heart">&hearts;</span>' : ''}</div>
       ${isOwner ? `<a href="/${mapData.slug}/edit" data-link class="edit-fab" aria-label="Edit map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></a>` : ''}
       <button class="reset-btn" id="reset" aria-label="Reset view">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>

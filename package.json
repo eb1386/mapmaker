@@ -1,8 +1,8 @@
 {
-  "name": "selfcare-map",
+  "name": "mapmaker",
   "private": true,
-  "version": "1.0.0",
-  "description": "Interactive self-care map of Vancouver powered by Supabase and MapLibre GL",
+  "version": "2.0.0",
+  "description": "Create and share beautiful interactive maps powered by Supabase and MapLibre GL",
   "type": "module",
   "scripts": {
     "dev": "vite",

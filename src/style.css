@@ -276,6 +276,12 @@ body { overflow: hidden; }
   max-width: calc(100vw - 44px);
   overflow: hidden; text-overflow: ellipsis;
 }
+.stamp.stamp-draggable {
+  pointer-events: auto; cursor: grab;
+  user-select: none; touch-action: none;
+  transition: box-shadow 200ms;
+}
+.stamp.stamp-draggable:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
 .stamp .heart { color: var(--accent); display: inline-block; transform: translateY(1px); margin-left: 2px; }
 
 /* panel */
@@ -407,6 +413,15 @@ body { overflow: hidden; }
   white-space: nowrap;
 }
 .editor-preview-btn:hover { background: var(--accent-deep); }
+.editor-heart-toggle {
+  display: flex; align-items: center; gap: 4px; cursor: pointer;
+  font-size: 18px; color: var(--accent-soft);
+  transition: color 200ms;
+}
+.editor-heart-toggle input { display: none; }
+.editor-heart-toggle input:checked + span { color: var(--accent); }
+.editor-heart-toggle span { transition: color 200ms, transform 200ms; }
+.editor-heart-toggle:hover span { transform: scale(1.2); }
 
 /* toolbar */
 .editor-toolbar {

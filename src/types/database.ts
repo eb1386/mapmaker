@@ -20,6 +20,9 @@ export interface MapRow {
   color_bg: string
   color_ink: string
   is_public: boolean
+  stamp_x: number
+  stamp_y: number
+  show_heart: boolean
   created_at: string
   updated_at: string
 }
