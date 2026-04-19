@@ -38,7 +38,7 @@ export async function renderDashboard() {
             <label class="auth-label">
               <span>custom url</span>
               <div class="slug-input-wrap">
-                <span class="slug-prefix">${location.origin}/</span>
+                <span class="slug-prefix">${location.hostname}/</span>
                 <input type="text" name="slug" required placeholder="my-map"
                   pattern="^[a-z0-9_-]+$" minlength="1" maxlength="60" />
               </div>
