@@ -1,6 +1,8 @@
-# mapmaker
+# mapmakr
 
 Create and share beautiful interactive maps. Sign up, pick a custom URL, drop pins on any city, add photos, audio, and descriptions.
+
+by [eb1386](https://github.com/eb1386)
 
 ## Features
 

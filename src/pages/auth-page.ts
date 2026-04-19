@@ -7,7 +7,7 @@ export function renderAuthPage(mode: 'login' | 'signup') {
   app.innerHTML = `
     <div class="auth-page">
       <div class="auth-card">
-        <h1 class="auth-logo">map<span>maker</span></h1>
+        <h1 class="auth-logo">map<span>makr</span></h1>
         <p class="auth-tagline">create and share beautiful interactive maps</p>
         <div class="auth-tabs">
           <button class="auth-tab ${mode === 'login' ? 'active' : ''}" data-mode="login">log in</button>
@@ -42,6 +42,7 @@ export function renderAuthPage(mode: 'login' | 'signup') {
             : `already have an account? <a href="/login" data-link>log in</a>`
           }
         </p>
+        <p class="auth-credit">by <a href="https://github.com/eb1386" target="_blank" rel="noopener">eb1386</a></p>
       </div>
     </div>
   `

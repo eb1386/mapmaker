@@ -1,5 +1,5 @@
 {
-  "name": "mapmaker",
+  "name": "mapmakr",
   "private": true,
   "version": "2.0.0",
   "description": "Create and share beautiful interactive maps powered by Supabase and MapLibre GL",

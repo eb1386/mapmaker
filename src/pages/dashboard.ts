@@ -12,7 +12,7 @@ export async function renderDashboard() {
   app.innerHTML = `
     <div class="dash-page">
       <header class="dash-header">
-        <h1 class="dash-logo">map<span>maker</span></h1>
+        <h1 class="dash-logo">map<span>makr</span></h1>
         <div class="dash-user">
           <span class="dash-username">@${profile.username}</span>
           <button class="dash-logout" id="logoutBtn">log out</button>
@@ -38,11 +38,11 @@ export async function renderDashboard() {
             <label class="auth-label">
               <span>custom url</span>
               <div class="slug-input-wrap">
-                <span class="slug-prefix">${location.hostname}/</span>
+                <span class="slug-prefix">your-url/</span>
                 <input type="text" name="slug" required placeholder="my-map"
                   pattern="^[a-z0-9_-]+$" minlength="1" maxlength="60" />
               </div>
-              <small>lowercase letters, numbers, dashes</small>
+              <small>letters, numbers, dashes only</small>
               <div class="slug-status" id="slugStatus"></div>
             </label>
             <div class="auth-error" id="newMapError"></div>
